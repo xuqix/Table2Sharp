@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Table2Sharp", "Table2Sharp\Table2Sharp.csproj", "{3784AC8B-5E8A-477D-BAFF-090DDB9FC153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Table2SharpConsole", "Table2SharpConsole\Table2SharpConsole.csproj", "{ED628197-67A1-4AF7-90F7-C5628E6DEFA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3784AC8B-5E8A-477D-BAFF-090DDB9FC153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3784AC8B-5E8A-477D-BAFF-090DDB9FC153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3784AC8B-5E8A-477D-BAFF-090DDB9FC153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3784AC8B-5E8A-477D-BAFF-090DDB9FC153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED628197-67A1-4AF7-90F7-C5628E6DEFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED628197-67A1-4AF7-90F7-C5628E6DEFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED628197-67A1-4AF7-90F7-C5628E6DEFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED628197-67A1-4AF7-90F7-C5628E6DEFA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
