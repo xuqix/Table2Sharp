@@ -45,26 +45,33 @@ namespace Table2SharpConsole
                 return;
             }
 
-            List<TableFile> list = new List<TableFile>();
-            var files = Utils.GetAllFiles(srcDir, "*.xls");
-            foreach (var file in files)
+            try
             {
-                TableFile excel = TableFile.Create(file.FullName);
-                if (excel == null) break;
+                List<TableFile> list = new List<TableFile>();
+                var files = Utils.GetAllFiles(srcDir, "*.xls");
+                foreach (var file in files)
+                {
+                    TableFile excel = TableFile.Create(file.FullName);
+                    if (excel == null) break;
 
-                string dstFile = Path.Combine(dstDir, Path.GetFileNameWithoutExtension(file.Name)) + ".txt";
-                bool ok = excel.SaveToTSV(dstFile);
-                if (!ok) break;
-                Console.WriteLine("输出文件:{0}", dstFile);
-                list.Add(excel);
+                    string dstFile = Path.Combine(dstDir, Path.GetFileNameWithoutExtension(file.Name)) + ".txt";
+                    bool ok = excel.SaveToTSV(dstFile);
+                    if (!ok) break;
+                    Console.WriteLine("输出文件:{0}", dstFile);
+                    list.Add(excel);
+                }
+                if (!string.IsNullOrEmpty(options.SharpOutputDirectory))
+                {
+                    if (options.IsAnnotation)
+                        Generator.Configuration.USE_ANNOTATION = true;
+                    string sharpDir = Utils.AbstractPath(options.SharpOutputDirectory);
+                    new Generator(list.ToArray()).DoGenerateAll(sharpDir);
+                    Console.WriteLine("\n输出CSharp文件到目录 :{0} ", sharpDir);
+                }
             }
-            if(!string.IsNullOrEmpty(options.SharpOutputDirectory))
+            catch(Exception e)
             {
-                if (options.IsAnnotation)
-                    Generator.Configuration.USE_ANNOTATION = true;
-                string sharpDir = Utils.AbstractPath(options.SharpOutputDirectory);
-                new Generator(list.ToArray()).DoGenerateAll(sharpDir, true);
-                Console.WriteLine("\n输出CSharp文件到目录 :{0} ", sharpDir);
+                Console.WriteLine(e.Message);
             }
         }
     }

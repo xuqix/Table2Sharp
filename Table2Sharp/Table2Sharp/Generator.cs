@@ -88,17 +88,16 @@ namespace Table2Sharp
             return Regex.IsMatch(name, @"^[a-zA-Z][a-zA-Z_0-9]*$");
         }
 
-        public void DoGenerateAll(string outDir, bool clear = false)
+        public void DoGenerateAll(string outDir)
         {
             DotLiquid.Template.RegisterFilter(typeof(TextUtils));
-            GenerateCSharpClassFiles(outDir, clear);
+            GenerateCSharpClassFiles(outDir);
         }
 
-        private void GenerateCSharpClassFiles(string dir, bool clear)
+        private void GenerateCSharpClassFiles(string dir)
         {
-            if (clear && Directory.Exists(dir))
-                Directory.Delete(dir, true);
-            Directory.CreateDirectory(dir);
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
 
             WriteUTF8File(Path.Combine(dir, "ConfigBase.cs"), Template.BaseClassTemplate);
             WriteUTF8File(Path.Combine(dir, "ConfigManager.cs"), Template.ConfigManagerTemplate);

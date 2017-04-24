@@ -141,29 +141,9 @@ namespace Table2Sharp
         {
             var dir = Path.GetDirectoryName(path);
             if (!Directory.Exists(dir))
-            {
-                try
-                {
-                    Directory.CreateDirectory(dir);
-                }
-                catch (System.Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return false;
-                }
-            }
+                Directory.CreateDirectory(dir);
 
-            FileStream fs;
-            try
-            {
-                fs = File.Open(path, FileMode.Create, FileAccess.ReadWrite);
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-
+            FileStream fs = File.Open(path, FileMode.Create, FileAccess.ReadWrite);
             using (BinaryWriter writer = new BinaryWriter(fs))
             {
                 writer.Write(Encoding.UTF8.GetBytes(content));
