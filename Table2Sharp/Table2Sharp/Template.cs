@@ -62,6 +62,33 @@ namespace Config
         {
             return value;
         }
+
+        protected int[] ParseIntArray(string value)
+        {
+            string[] data = value.Trim('[',']',' ').Split(',');
+            var result = new int[data.Length];
+            for(int i = 0; i < result.Length; ++i)
+                result[i] = ParseInt(data[i]);
+            return result;
+        }
+
+        protected float[] ParseFloatArray(string value)
+        {
+            string[] data = value.Trim('[',']',' ').Split(',');
+            var result = new float[data.Length];
+            for(int i = 0; i < result.Length; ++i)
+                result[i] = ParseFloat(data[i]);
+            return result;
+        }
+
+        protected string[] ParseStringArray(string value)
+        {
+            string[] data = value.Trim('[',']',' ').Split(',');
+            var result = new string[data.Length];
+            for(int i = 0; i < result.Length; ++i)
+                result[i] = ParseString(data[i]);
+            return result;
+        }
     }
 }
 ";
@@ -109,13 +136,20 @@ namespace Config
                 config.ID = ParseInt(cells[0]);
 {% for field in Model.fields -%}
 {% assign i = forloop.index0 -%}
-{% case field.type -%}
+{% assign type = field.type | replace:' ','' -%}
+{% case type -%}
 {% when 'int' -%}
                 config.{{field.name}} = ParseInt(cells[{{i}}]);
 {% when 'float' -%}
                 config.{{field.name}} = ParseFloat(cells[{{i}}]);
 {% when 'string' -%}
                 config.{{field.name}} = ParseString(cells[{{i}}]);
+{% when 'int[]' -%}
+                config.{{field.name}} = ParseIntArray(cells[{{i}}]);
+{% when 'float[]' -%}
+                config.{{field.name}} = ParseFloatArray(cells[{{i}}]);
+{% when 'string[]' -%}
+                config.{{field.name}} = ParseStringArray(cells[{{i}}]);
 {% endcase -%}
 {% endfor -%}
 

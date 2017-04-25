@@ -74,8 +74,8 @@ namespace Table2Sharp
                     field.comment = Configuration.USE_ANNOTATION ? table[Configuration.NAME_ROW_NUM, i].annotate : table[Configuration.DESCRIPT_ROW_NUM, i];
                     classInfo.fields.Add(field);
 
-                    if (!CheckFormat(field.type)) throw new Exception("Format error with " + field.type + " in file: " + table.FilePath); ;
-                    if (!CheckFormat(field.name)) throw new Exception("Format error with " + field.name + " in file: " + table.FilePath); ;
+                    if (!CheckFormat(field.type)) throw new Exception("Field Type error with " + field.type + " in file: " + table.FilePath); ;
+                    if (!CheckFormat(field.name)) throw new Exception("Field Name error with " + field.name + " in file: " + table.FilePath); ;
                 }
 
                 _classes.Add(classInfo);
@@ -85,7 +85,7 @@ namespace Table2Sharp
 
         private bool CheckFormat(string name)
         {
-            return Regex.IsMatch(name, @"^[a-zA-Z][a-zA-Z_0-9]*$");
+            return Regex.IsMatch(name, @"^[a-zA-Z][a-zA-Z_0-9]*(\s*\[\])??$");
         }
 
         public void DoGenerateAll(string outDir)
