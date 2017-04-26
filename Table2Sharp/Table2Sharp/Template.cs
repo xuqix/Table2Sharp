@@ -38,8 +38,8 @@ namespace Config
 
         protected int ParseInt(string value)
         {
-            if (string.IsNullOrEmpty(value))
-                return default(int);
+            if (string.IsNullOrEmpty(value)) return default(int);
+
             int v;
             if(int.TryParse(value, out v)) 
                 return v;
@@ -61,6 +61,17 @@ namespace Config
         protected string ParseString(string value)
         {
             return value;
+        }
+
+        protected bool ParseBool(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return default(bool);
+
+            bool v;
+            if (bool.TryParse(value, out v))
+                return v;
+            else
+                throw new System.Exception(""parse bool type error "" + value + "" in "" + this.GetType().Name);
         }
 
         protected int[] ParseIntArray(string value)
@@ -87,6 +98,15 @@ namespace Config
             var result = new string[data.Length];
             for(int i = 0; i < result.Length; ++i)
                 result[i] = ParseString(data[i]);
+            return result;
+        }
+
+        protected bool[] ParseBoolArray(string value)
+        {
+            string[] data = value.Trim('[',']',' ').Split(',');
+            var result = new bool[data.Length];
+            for(int i = 0; i < result.Length; ++i)
+                result[i] = ParseBool(data[i]);
             return result;
         }
     }
@@ -144,12 +164,16 @@ namespace Config
                 config.{{field.name}} = ParseFloat(cells[{{i}}]);
 {% when 'string' -%}
                 config.{{field.name}} = ParseString(cells[{{i}}]);
+{% when 'bool' -%}
+                config.{{field.name}} = ParseBool(cells[{{i}}]);
 {% when 'int[]' -%}
                 config.{{field.name}} = ParseIntArray(cells[{{i}}]);
 {% when 'float[]' -%}
                 config.{{field.name}} = ParseFloatArray(cells[{{i}}]);
 {% when 'string[]' -%}
                 config.{{field.name}} = ParseStringArray(cells[{{i}}]);
+{% when 'bool[]' -%}
+                config.{{field.name}} = ParseBoolArray(cells[{{i}}]);
 {% endcase -%}
 {% endfor -%}
 
@@ -179,7 +203,7 @@ namespace Config
 
 {% endfor -%}
                 default:
-                    throw new System.Exception(""Config "" + name + "" nout found!"");
+                    throw new System.Exception(""Config "" + name + "" not found!"");
             }
         }
     }
