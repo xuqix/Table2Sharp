@@ -97,13 +97,15 @@ namespace Table2Sharp
                 for (int i = 0; i < sheet.GetRow(0).LastCellNum; i++)
                     _data.Columns.Add(Convert.ToChar(((int)'A') + i).ToString(), typeof(Cell));
 
+                int colNum = _data.Columns.Count;
+
                 for (int i = 0; i < sheet.LastRowNum + 1; i++)
                 {
                     IRow row = sheet.GetRow(i);
                     if(row == null) continue;
 
                     DataRow dataRow =  _data.NewRow();
-                    for(int j = 0; j < row.LastCellNum; j++)
+                    for(int j = 0; j < colNum; j++)
                     {
                         ICell cell = row.GetCell(j);
                         Cell myCell = new Cell();
